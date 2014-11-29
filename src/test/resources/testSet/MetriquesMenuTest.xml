@@ -1,0 +1,6 @@
+<ihm>
+  <menu id="menu_24-b" name="Metric">
+    <menuItem id="instantJmxMetricMenuitem_menuitem_26-a" name="InstantJmxMetric">#InstantJmxMetric</menuItem>
+    <menuItem id="chartJmxMetricMenuitem_menuitem_27-a" name="ChartJmxMetric">#ChartJmxMetric</menuItem>
+  </menu>
+</ihm>

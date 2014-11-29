@@ -1,0 +1,12 @@
+<ihm>
+  <menu id="menu_33-b" name="Admin">
+    <menuItem id="userListMenuitem_menuitem_36-a" name="UserList">#UserMD</menuItem>
+    <menuItem id="roleMenuitem_menuitem_37-a" name="Role">#Role</menuItem>
+    <menuItem id="metriqueJmxMenuitem_menuitem_42" name="MetriqueJmx">#MetriqueJmx</menuItem>
+    <menuItem id="connecteurJmxMenuitem_menuitem_43-a" name="ConnecteurJmx">#ConnecteurJmx</menuItem>
+    <menuItem id="fichierMetriqueJmxMenuitem_menuitem_44-a" name="FichierMetrique">#FichierMetriqueJmx</menuItem>
+    <menuItem id="collecteMetriqueJmxMenuitem_menuitem_45-a" name="CollecteMetrique">#CollecteMetriqueJmx</menuItem>
+    <menuItem id="libelleBatchsMenuitem_menuitem_47-a" name="LibelleBatchs">#LibelleBatch</menuItem>
+    <menuItem id="logTypesMenuitem_menuitem_48-a" name="LogTypes">#LogTypes</menuItem>
+  </menu>
+</ihm>

@@ -1,0 +1,6 @@
+<ihm>
+  <menu id="menu_18-b" name="Logs">
+    <menuItem id="globalLogMenuitem_menuitem_20-a" name="GlobalLog">#GlobalLog</menuItem>
+    <menuItem id="savedLogMenuitem_menuitem_21-a" name="SavedLog">#SavedLog</menuItem>
+  </menu>
+</ihm>
