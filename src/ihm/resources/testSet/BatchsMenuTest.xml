@@ -1,0 +1,7 @@
+<ihm>
+  <menu id="batchsMenu_menu-b" name="Batch">
+    <menuItem id="jobBatchMenuitem_menuitem-a" name="JobBatch">#JobBatch</menuItem>
+    <menuItem id="jobControlMMenuitem_menuitem-a" name="JobControl">#JobControlMList</menuItem>
+    <menuItem id="sqlMenuitem_menuitem-a" name="Sql">#Sql</menuItem>
+  </menu>
+</ihm>

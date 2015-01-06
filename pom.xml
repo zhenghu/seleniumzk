@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>fr.edf.distribution</groupId>
-  <artifactId>linkylog.ihm.testing</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <parent>
+    <groupId>fr.edf.distribution</groupId>
+    <artifactId>sup</artifactId>
+    <version>1.11-SNAPSHOT</version>
+    <relativePath>..</relativePath>
+  </parent>
+  <artifactId>sup-web-test</artifactId>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -28,59 +30,128 @@
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-server</artifactId>
-      <version>2.34.0</version>
+      <version>2.39.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.github.detro.ghostdriver</groupId>
       <artifactId>phantomjsdriver</artifactId>
-      <version>1.0.4</version>
+      <version>1.1.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.1.1</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
 
+  <profiles>
+    <profile>
+      <id>test-ihm</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>add-test-source-integration</id>
+                <phase>initialize</phase>
+                <goals>
+                  <goal>add-test-source</goal>
+                </goals>
+                <configuration>
+                  <sources>
+                    <source>src/ihm/java</source>
+                  </sources>
+                </configuration>
+              </execution>
+              <execution>
+                <id>add-test-resource-integration</id>
+                <phase>initialize</phase>
+                <goals>
+                  <goal>add-test-resource</goal>
+                </goals>
+                <configuration>
+                  <resources>
+                    <resource>
+                      <directory>src/ihm/resources</directory>
+                      <filtering>true</filtering>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.1</version>
+            <configuration>
+              <source>1.6</source>
+              <target>1.6</target>
+            </configuration>
+          </plugin>
+          <!--phantomjs plugin pour installation et execution phantomjs-->
+          <plugin>
+            <groupId>com.github.klieber</groupId>
+            <artifactId>phantomjs-maven-plugin</artifactId>
+            <version>0.4</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>install</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <version>1.9.7</version>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>2.17</version>
+            <configuration>
+              <redirectTestOutputToFile>true</redirectTestOutputToFile>
+              <systemPropertyVariables>
+                <phantomjs.binary.path>${phantomjs.binary}</phantomjs.binary.path>
+                <java.util.logging.config.file>src/test/resources/properties/logging.properties</java.util.logging.config.file>
+              </systemPropertyVariables>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
   <build>
     <plugins>
       <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
-        <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
-        </configuration>
-      </plugin>
-      <!--phantomjs plugin pour installation et execution phantomjs-->
-      <plugin>
-        <groupId>com.github.klieber</groupId>
-        <artifactId>phantomjs-maven-plugin</artifactId>
-        <version>0.4</version>
+        <!-- surcharge des executions du plugin enforce defini dans le pom-parent qui ne supporte pas selenium -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
         <executions>
           <execution>
+            <id>enforce-banned-dependencies</id>
             <goals>
-              <goal>install</goal>
+              <goal>enforce</goal>
             </goals>
+            <configuration>
+              <skip>true</skip>
+            </configuration>
+          </execution>
+          <execution>
+            <id>enforce-global-projects-requirements</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <skip>true</skip>
+            </configuration>
           </execution>
         </executions>
-        <configuration>
-          <version>1.9.7</version>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.17</version>
-        <configuration>
-          <redirectTestOutputToFile>true</redirectTestOutputToFile>
-          <systemPropertyVariables>
-            <phantomjs.binary.path>${phantomjs.binary}</phantomjs.binary.path>
-            <host.base.url>${host}</host.base.url>
-            <linkylog.ihm.username>${username}</linkylog.ihm.username>
-            <linkylog.ihm.password>${password}</linkylog.ihm.password>
-            <java.util.logging.config.file>
-              src/test/resources/properties/logging.properties
-            </java.util.logging.config.file>
-          </systemPropertyVariables>
-        </configuration>
       </plugin>
       <!--jaxb2 xsd to java-->
       <plugin>
@@ -94,7 +165,7 @@
               <goal>generate</goal>
             </goals>
             <configuration>
-              <schemaDirectory>src/test/resources/xsd</schemaDirectory>
+              <schemaDirectory>src/ihm/resources/xsd</schemaDirectory>
               <schemaIncludes>
                 <include>MenuItem.xsd</include>
               </schemaIncludes>
@@ -126,26 +197,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <profiles>
-    <!-- Déploiement local-->
-    <profile>
-      <id>local</id>
-      <properties>
-        <host>http://localhost:7001</host>
-        <username>weblogic</username>
-        <password>weblogic1</password>
-      </properties>
-    </profile>
-    <!-- Déploiement dev-->
-    <profile>
-      <id>dev</id>
-      <properties>
-        <host>http://sup.dev.sid.distribution.edf.fr:56101</host>
-        <username>ZH16093N</username>
-        <password>Mmdp-3325</password>
-      </properties>
-    </profile>
-  </profiles>
-
 </project>

@@ -1,0 +1,9 @@
+<ihm>
+  <menu id="syntheseMenu_menu-b" name="synthese">
+    <menuItem id="healthDashboardMenuitem_menuitem-a" name="HealthDashbord">#HealthDashboard</menuItem>
+    <menuItem id="activityDashboardMenuitem_menuitem-a" name="ActivityDashbord">#ActivityDashboard</menuItem>
+    <menuItem id="fluxDashboardMenuitem_menuitem-a" name="FluxDashbord">#FluxDashboard</menuItem>
+    <menuItem id="perfDashboardMenuitem_menuitem-a" name="PerfDashbord">#PerfDashboard</menuItem>
+    <menuItem id="discoMenuitem_menuitem-a" name="DiscoDashbord">#Disco</menuItem>
+  </menu>
+</ihm>
